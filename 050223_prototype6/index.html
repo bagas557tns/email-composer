@@ -3,14 +3,35 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Message Composer</title>
+	<title>Make Me a Message!</title>
   <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="main.css">
-</head>
+    <link rel="icon" type="image/x-icon" href="https://em-content.zobj.net/thumbs/240/apple/354/incoming-envelope_1f4e8.png">
+<link rel="stylesheet" type="text/css" href="main.css"></head>
 <body>
 
-<div class="controls">
+<div id="wrapper">
+
+<div class="container" id="container3">
+<div class="sticky-handle"></div>
+<div id="desc">
+<p >MAKE ME A MESSAGE!</p>
+<p >Create customizable memos within seconds for all your correspondence needs with Make Me a Message. </p>
+<ul>
+	<li>FREE to use</li>
+	<li>Choose between different greeting styles and tones</li>
+	<li>Choose your message’s urgency and occasion</li>
+	<li>Choose how many receivers you would like </li>
+	<li>Add visual assets to enhance your message</li>
+</ul>
+</div>
+</div>
+
+<div class="container" id="container1">
+<div class="sticky-handle"></div>
+<div id="controls">
+
+<div id="selects">
   <select id="greetingSelect">
   	<option value="open">Select Greeting</option>
     <option value="nice">Cordial</option>
@@ -18,50 +39,63 @@
     <option value="random">Miscellaneous</option>
   </select>
 
-	<br>
-
  	<select id="toneSelect">
   	<option value="open">Select Tone</option>
     <option value="positive">Positive</option>
     <option value="negative">Negative</option>
     <option value="general">General</option>
   	</select>
+</div>
 
-	<br>
+<div id="texts">
+	<input  type="text" id="timeType">
+	<label for="timeType">Date/Occasion</label>
 
-	<label for="timeType">Set Date or Occasion (e.g. Monday, May 1st, Halloween)</label>
-	<input type="text" id="timeType">
-
-  	<br>
-
-	<label for="person">Set No. of Recipients</label><br>
 	<input type="text" id="person" class="inputs inputs2">
+	<label for="person"># of Recipients</label>
 
-	<br>
-
-	<label for="deadline">Set Deadline (e.g. 4 hours, 30 minutes, 1 day)</label>
 	<input type="text" id="deadline" class="inputs inputs2">
-
-	<br>
-
-  	<button id="gen1" onclick="generateSentence()">Generate Context</button>
-
-  	<button id="gen2">Generate Request</button>
-  	<br>
- <button onclick="increaseEmojis()" class="emoji-btn">Add Visual Assets</button>
-<button onclick="resetParagraph()">Restart Message</button>
-<button onclick="addBlock()">Add Message</button>
+	<label for="deadline">Deadline/Timeframe</label>
 </div>
 
-<p id="text-output">
-	<span id="sentence-output"></span>
-	<span id="sample-output"></span>
-</p>
-
-<div id="text-output2">
+	<div id="main-btns">
+  <button id="gen">Write Message </button>
+  <button id="emot" onclick="increaseEmojis()" class="emoji-btn">Add Visual Assets</button>
+  <button id="copy" onclick="copyOutput()">Copy Message</button>
+  </div>
+  <div id="other-btns">
+  <button id="reset">New Message</button>
+  </div>
 </div>
+
+<div id="text-output">
+	<div id="space"><output id="sentence-output"></output></div>
+</div>
+</div>
+
+<div class="container" id="container2">
+<div class="sticky-handle"></div>
+<p style="padding-left: 1rem;">Message History:</p>
+<div id="text-output2">&nbsp</div>
+</div>
+</div>
+
+<div class="wrapper2">
+	<div class="container" id="container4">
+		<div class="sticky-handle"></div>
+		<div class="share-btns">
+			<a href="https://twitter.com/intent/tweet"><img class="twitter-share-button" src="https://aux.iconspalace.com/uploads/1061260918.png"></a>
+		  <a href="https://www.facebook.com/sharer/sharer.php?u=example.org"><img class="fb-share-button" src="https://www.tutorialstutor.com/uploads/facebook/Facebook-share-button.png"></a>
+		</div>
+	</div>
+	<div class="container" id="container5"></div>
+</div>
+
+
 
 <script type="text/javascript" src="script.js"></script>
 
 </body>
 </html>
+
+

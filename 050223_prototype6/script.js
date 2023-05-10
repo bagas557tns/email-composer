@@ -1,3 +1,19 @@
+// setting up arrays for selection-based context (sentence)
+const sentenceOutput = document.getElementById('sentence-output');
+const sampleOutput = document.getElementById('sample-output');
+
+
+const nice = ['Hi Beautiful:', 'Heyyy..', 'Hey There 👋', 'hey :), i just wanted u to kno,', 'Hiiiii', 'Good Morning!'];
+const loud = ['HEY YOU', 'AYYYY', '!! HEY !!', 'Its time to get UP!', 'OMGGGG', '!!ATTENTION!!', 'DID YOU HEAR', 'LISTEN UPP'];
+const random = ['Bonjour...', 'Get your money UP player,', 'You know what time it is…', 'um im like hey, what’s up, hello', 'Guess what?..', 'Welllll'];
+
+const positiveTone = ['You’re LOVED 💓💗❣️BY SOME 🌞GOOD 🌸FOLKS. ', 'If we are together 👫💏 We gon act silly 😜😋 ', ' 🎀........Something will make u really happy today😃 ', 'U r one of my most 🙌loyal 💪👏friends 👯 ', '👀🌟 It is of utmost 🔝 importance that 👥 as 🅰️ society 🚶‍♂️🚶‍♀️we transcend 🚀 our differences 🎭 '];
+const negativeTone = ['U jinxed urself yesterday without knowing it😱 ', 'PLANET 🌌🌌 EARTH 🌎 IS 🈶🅰 IN 🕕 DANGER OF 👬 BEING 😑📈 RAVAGED BY 😈🏳 GLOBAL WARMING ', 'I 👀 heard you👂👂 were talking 👄👄👄shit💩💩💩and I want you 👆👆 to know that I 👀 do not care 💁💁 '];
+const generalTone = ['DON’T BREAK THE CHAIN ', 'the 🔎🔎 government 🔭📝 might lie 😶🚫 2 you 👆🏼 about ufos 👽🚀 but i 👋🏼👋🏼 would never 🙅🏼😡 lie 2⃣ you! ', 'I will 🙅🚫❌ never trick🎭 you! ', 'Time ⁉️ to GET 🉐✊ THE 🐩 DAWGS 🐶OUT ', "We 🌿 must 💪😩 look 👀👄👀 inward and ask 🙋😩 ourselves if what 😦😦😦 we 👦🌊 search 🔍 is truly ⚡ something 😅 we 🚟🚟 want. "];
+
+const pronouns = ['its ', 'it is ', '...looks like it is ', 'ITS '];
+
+// setting up recursive grammer for text input-based request (sample)
 let rules = {
     "M":[
       ["ACT1","P", " people ", "PREP", "T", " ", "CON" ], 
@@ -44,22 +60,6 @@ let rules = {
     ]
  };
 
-
-// ARRAY-BASED SELECTION INPUT SCRIPT // 
-const sentenceOutput = document.getElementById('sentence-output');
-const sampleOutput = document.getElementById('sample-output');
-
-
-const nice = ['Hi Beautiful:', 'Heyyy..', 'Hey There 👋', 'hey :), i just wanted u to kno,', 'Hiiiii', 'Good Morning!'];
-const loud = ['HEY YOU', 'AYYYY', '!! HEY !!', 'Its time to get UP!', 'OMGGGG', '!!ATTENTION!!', 'DID YOU HEAR', 'LISTEN UPP'];
-const random = ['Bonjour...', 'Get your money UP player,', 'You know what time it is…', 'um im like hey, what’s up, hello', 'Guess what?..', 'Welllll'];
-
-const positiveTone = ['You’re LOVED 💓💗❣️BY SOME 🌞GOOD 🌸FOLKS.', 'If we are together 👫💏 We gon act silly 😜😋', ' 🎀........Something will make u really happy today😃', 'U r one of my most 🙌loyal 💪👏friends 👯'];
-const negativeTone = ['U jinxed urself yesterday without knowing it😱', 'PLANET 🌌🌌 EARTH 🌎 IS 🈶🅰 IN 🕕 DANGER OF 👬 BEING 😑📈 RAVAGED BY 😈🏳 GLOBAL WARMING', '👀🌟 It is of utmost 🔝 importance that 👥 as 🅰️ society 🚶‍♂️🚶‍♀️we transcend 🚀 our differences 🎭 ', 'I 👀 heard you👂👂 were talking 👄👄👄shit💩💩💩and I want you 👆👆 to know that I 👀 do not care 💁💁'];
-const generalTone = ['DON’T BREAK THE CHAIN', 'the 🔎🔎 government 🔭📝 might lie 😶🚫 2 you 👆🏼 about ufos 👽🚀 but i 👋🏼👋🏼 would never 🙅🏼😡 lie 2⃣ you!', 'I will 🙅🚫❌ never trick🎭 you!', 'Time ⁉️ to GET 🉐✊ THE 🐩 DAWGS 🐶OUT', "We 🌿 must 💪😩 look 👀👄👀 inward and ask 🙋😩 ourselves if what 😦😦😦 we 👦🌊 search 🔍 is truly ⚡ something 😅 we 🚟🚟 want."];
-
-const pronouns = ['its ', 'it is ', '...looks like it is ', 'ITS '];
-
     function generateSentence() {
       const selectGreeting = document.getElementById('greetingSelect');
       const selectTone = document.getElementById('toneSelect');
@@ -98,9 +98,13 @@ const pronouns = ['its ', 'it is ', '...looks like it is ', 'ITS '];
       pronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
 
       const sentenceOutput = document.getElementById('sentence-output');
-      // sentenceOutput.textContent = `The weather today is ${adjective}.`;
-      sentenceOutput.textContent = greeting + " " + pronoun + " " + time + "." + " " + tone;
+      sentenceOutput.innerHTML = greeting + " " + pronoun + " " + time + "." + " " + tone;
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.getElementById('gen');
+    btn.addEventListener('click', generateSentence);
+});
 
 
 function generate(token, current_result) {
@@ -126,12 +130,11 @@ function start() {
     var token = 'M';
     var current_result = [];
     var result = generate(token, current_result);
-    sampleOutput.innerHTML = result;
+    sentenceOutput.insertAdjacentHTML('beforeend', result);
 }
 
-
 document.addEventListener('DOMContentLoaded', function(){
-    var btn = document.getElementById('gen2');
+    var btn = document.getElementById('gen');
     btn.addEventListener('click', start);
 });
 
@@ -157,33 +160,33 @@ function insertRandomEmojis() {
   }
   const newParagraph = words.join(" ");
   sentenceOutput.innerText = newParagraph;
-
-  const words2 = sampleOutput.innerText.split(' ');
-  for (var k = 1; k < words2.length; k++) {
-    var bin2 = Math.floor(Math.random() * 2);
-    if (bin2 === 1) {
-      var number2 = Math.floor(Math.random() * 3);
-      for (var l = 0; l < number2; l++) {
-        var randomEmoji2 = Math.floor(Math.random() * emojis.length); 
-        words2[k] = words2[k] + ' ' + emojis[randomEmoji2];
-      }
-    }
-  }
-  const newParagraph2 = words2.join(" ");
-  sampleOutput.innerText = newParagraph2;
 }
 
-
-// Function to increase the number of emojis
 function increaseEmojis() {
-  emojis.push('👇', '😱', '🤩', '🎁', '📝', '🤑💰');
+  emojis.push('👇', '😱', '🤩', '🎁', '📝', '🤑💰',  '💸💎', '🚫🚫', '❗️❗', '🔟🔟🔟', '💥💥💥💥', '👽🛸', '👉🤷‍♀️👈 ', '🥴🥴🥴', '✋✋', '🔛 🔛🔛', '🙈🙆‍♂️', '💲💹💹🏧', '🚨🚨🚨', '👄', '⏩💕');
   insertRandomEmojis();
 }
 
-// Function to reset the paragraph
+
+  let text = sentenceOutput;
+  const copyOutput = async() => {
+    try {
+      await 
+  navigator.clipboard.writeText(text.value);
+    } catch (err) {
+      console.error('Failed to copy');
+    }
+  }
+
+
+// Reset and log generated output
 function resetParagraph() {
+
+const node = document.getElementById('sentence-output');
+const clone = node.cloneNode(true);
+document.getElementById('text-output2').appendChild(clone);
+
   sentenceOutput.innerText = " ";
-  sampleOutput.innerText = " ";
   var newGreeting = document.getElementById('greetingSelect')
   var newPerson = document.getElementById('person');
   var newDeadline = document.getElementById('deadline');
@@ -194,40 +197,41 @@ function resetParagraph() {
   newOccasion.value = "";
   newGreeting.value = 'open';
   newTone.value = 'open';
+
 }
 
-//  function sendEmail() {
-//   let generatedMessage = document.getElementById('text-output');
-//   Email.send({
-//     Host : "smtp.mailtrap.io",
-//     Username : "<Mailtrap username>",
-//     Password : "<Mailtrap password>",
-//     To : 'recipient@example.com',
-//     From : "sender@example.com",
-//     Subject : "Test email",
-//     Body : "generatedMessage"
-//   }).then(
-//     message => alert(message)
-//   );
+document.addEventListener('DOMContentLoaded', function(){
+    var resetBtn = document.getElementById('reset');
+    resetBtn.addEventListener('click', resetParagraph);
+});
+
+
+
+
+// function addBlock() {
+// const source = document.getElementById('text-output');
+// const innerTextOutput = document.getElementById('text-output2');
+// innerTextOutput.value = source.innerText;
 // }
 
- $(function () {
-        $(".controls").draggable({            
-            stack: ".controls"
-        });
-    });
-
- $(function () {
-        $("#text-output").draggable({            
-            stack: "#text-output"
-        });
-    });
 
   // $(function () {
-  //       $("#text-output2").draggable({            
-  //           stack: "#text-output2"
-  //       });
-  //   });
+ //        $(".controls").draggable({            
+ //            stack: ".controls"
+ //        });
+ //    });
+
+ // $(function () {
+ //        $("#text-output").draggable({            
+ //            stack: "#text-output"
+ //        });
+ //    });
+
+  $(function () {
+        $(".container").draggable({            
+            stack: ".container"
+        });
+    });
 
 // function addBlock() {
 // const node = document.getElementById('text-output');
@@ -237,19 +241,35 @@ function resetParagraph() {
 // newBlock.appendChild(clone);
 // }
 
-function addBlock() {
-const node = document.getElementById('text-output');
-const clone = node.cloneNode(true);
-document.getElementById('text-output2').appendChild(clone);
-}
+  // const words2 = sampleOutput.innerText.split(' ');
+  // for (var k = 1; k < words2.length; k++) {
+  //   var bin2 = Math.floor(Math.random() * 2);
+  //   if (bin2 === 1) {
+  //     var number2 = Math.floor(Math.random() * 3);
+  //     for (var l = 0; l < number2; l++) {
+  //       var randomEmoji2 = Math.floor(Math.random() * emojis.length); 
+  //       words2[k] = words2[k] + ' ' + emojis[randomEmoji2];
+  //     }
+  //   }
+  // }
+  // const newParagraph2 = words2.join(" ");
+  // sampleOutput.innerText = newParagraph2;
 
-// function addBlock() {
-// const source = document.getElementById('text-output');
-// const innerTextOutput = document.getElementById('text-output2');
-// innerTextOutput.value = source.innerText;
+
+// document.addEventListener('DOMContentLoaded', function(){
+//     var copyBtn = document.getElementById('copy');
+//     copyBtn.addEventListener('click', copyOutput);
+// });
+
+// function myFunction() {
+//   var copyText = sentenceOutput;
+
+//   copyText.select();
+//   copyText.setSelectionRange(0, 99999); // For mobile devices
+
+//   navigator.clipboard.writeText(copyText.value);
+  
 // }
- 
-
 
 
 
