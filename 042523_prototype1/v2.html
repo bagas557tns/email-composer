@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tracery Slider Example</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+
+      #output {
+        margin-top: 20px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tracery Slider Example</h1>
+
+    <label for="slider">Adjust the slider to generate a paragraph:</label>
+    <input type="range" id="slider" min="1" max="10" value="5">
+
+    <div id="output"></div>
+
+    <script src="https://unpkg.com/tracery-grammar"></script>
+    <script>
+      const grammar = tracery.createGrammar({
+        'origin': ['The #adjective# #noun# #verb# #preposition# the #adjective# #noun#.'],
+        'adjective': ['red', 'happy', 'brave', 'shiny'],
+        'noun': ['car', 'dog', 'sun', 'book'],
+        'verb': ['jumps', 'runs', 'flies', 'walks'],
+        'preposition': ['over', 'under', 'through', 'around']
+      });
+
+      function generateParagraph() {
+        const sliderValue = document.getElementById('slider').value;
+        const numSentences = Math.ceil(sliderValue / 2);
+        const sentences = [];
+
+        for (let i = 0; i < numSentences; i++) {
+          const sentence = grammar.flatten('#origin#');
+          sentences.push(sentence);
+        }
+
+        const paragraph = sentences.join(' ');
+        document.getElementById('output').textContent = paragraph;
+      }
+
+      document.getElementById('slider').addEventListener('input', generateParagraph);
+      generateParagraph();
+    </script>
+  </body>
+</html>

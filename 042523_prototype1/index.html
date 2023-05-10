@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>prototype 1</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<div id="container">
+	<div id="top-bar">
+		<div  id="title"><img src="mail-icon.png"> Email Composer</div>
+		<div id="abt-button">?</div>
+	</div>
+<div id="send-bar">
+	<div>Recipient: <input type="text" id="rec"> <button id="add-button" onclick="display1()">Add</button></div>
+	<div>Sender: &nbsp&nbsp&nbsp&nbsp<input type="text" id="send"> <button id="add-button" onclick="display2()">Add</div>
+</div>
+<div id="msg-container">
+	<p>Dear <span id="receiver">To Whom It May Concern</span>,</p>
+	<p id="main-text"></p>
+	<p id="action">Send this to <span id="amt-people">7</span> people in <span id="amt-time">1 hour</span>.</p>
+	<p>If you don't, you will <span id="amt-curse">have bad luck for a week</span>!</p>
+	<p>Best wishes,<br><span id="sender">Yours Truly</span></p>
+</div>
+	<br>
+	<input id="msg-button" type="button" onclick="newMessage()" value="New message">
+	<br>
+	<br>
+<div id="controls">
+	<input type="range" min="0" max="7" value="3" class="slider" id="peopleSlider">	
+	<input type="range" min="0" max="6" value="3" class="slider" id="timeSlider">
+	<input type="range" min="0" max="10" value="2" class="slider" id="curseSlider">
+</div>
+	<br>
+	<button id="send-button" onclick="sendMail(); return false">Send E-mail</button>
+</div>
+</body>
+
+<!-- <script src="p5.min.js" type="text/javascript"></script>
+<script src="p5.dom.js" type="text/javascript"></script> -->
+<script type="text/javascript">	
+var rules = {
+	// origin nodes
+    "M":[
+      ["H", "This", "O1", "has been", "V1", "the world", "NUM1", "times.", "A", "P1", "forwarded this message after receiving it and", "V2", "T1"]
+    ],
+    "H":[
+      ["This is real!"], 
+      ["Do not ignore this!"],
+      ["Listen carefully."], 
+      ["Please pay close attention..."], 
+      ["You might want to hear this..."], 
+      ["This is not a prank:"],
+      ["This isn't a joke!"], 
+      ["I cannot believe this..."], 
+      ["This is incredible!!"],
+      ["Read this!!"], 
+      ["This is simply unbelievable."],
+      ["Read this as quick as you can:"],
+      ["This is really important."],
+      ["Wow, this is amazing:"],
+      ["Wow..."],
+      ["You should probably read this..."]
+    ], 
+    "O1":[
+      ["letter"], 
+      ["message"],
+      ["chain"], 
+      ["email"],
+      ["note"]
+    ],
+    "V1":[
+      ["around"], 
+      ["shared throughout"],
+      ["circulated around"], 
+      ["sent around"],
+    ],    
+    "NUM1":[
+      ["7"], ["13"],["26"], ["8"],["16"],["9"],["22"],["11"],["27"],["19"],["5"],["12"]
+    ],
+    "P1":[
+      ["local woman"], 
+      ["young lady"],
+      ["young girl"], 
+      ["young man"],
+      ["young boy"],
+      ["gentleman"], 
+      ["local man"],
+      ["friend of a friend"], 
+      ["lovely lady"],
+      ["dashing man"],
+      ["childhood friend"]
+    ],
+    "V2":[
+      ["won the New Jersey Powerball"], 
+      ["met their soulmate"],
+      ["found $4,000 in cash on the side of the road"], 
+      ["got a double promotion at work"],
+      ["met the love of their life"],
+      ["was blessed by God Himself"], 
+      ["found an actual gold ring"],
+      ["won a 2023 Kia Sorento"], 
+      ["had a vision of his guardian angel"], 
+      ["got out of a speeding ticket"],
+      ["found a $100 bill"], 
+      ["got a free, all-inclusive trip to the Lake of the Ozarks"],
+      ["got a raise"], 
+      ["got twice their annual bonus"],
+      ["found a big bag of money"]
+    ],
+    "T1":[
+      ["the next day."], 
+      ["the next week."],
+      ["immediately afterwards."],
+      ["within a week."],
+      ["within a week."],     
+      ["within a day."],      
+      ["within a month."],
+      ["the very next hour."], 
+      ["the next month."]
+    ],
+	}
+
+function expand(start, expansion){
+  if(rules[start]){
+    var pick = (rules[start])[Math.floor(Math.random()*(rules[start]).length)];
+    for(var i = 0; i < pick.length; i++){
+      expand(pick[i],expansion)
+    }
+  }
+  else {
+    expansion.push(start);
+  }
+  return expansion.join(" ");
+}
+
+window.onload = function write() {
+  
+  var origin = "M";
+  var expansion = [];
+  var result = expand(origin, expansion);
+  var mainText = document.getElementById('main-text');
+  mainText.innerHTML = result
+  
+} 
+
+function newMessage(){
+    window.location.reload();
+}
+
+const people = ["3","4","5","6","7","8","9","10"]
+const time = ["5 minutes","15 minutes","30 minutes","1 hour","3 hours","12 hours","24 hours"]
+const curse = ["have a bad Monday","have bad luck for a week","see your worst fear in your room tonight","have bad luck for a year","lose a lot of money","curse the rest of your lineage","lose your one chance at true love", "never amount to your parent’s expectations", "be haunted by a 100 ghosts", "die imediately", "suffer eternal damnation"]
+
+const amtOfPeople = document.getElementById("amt-people");
+const amtOfTime = document.getElementById("amt-time");
+const amtOfCurse = document.getElementById("amt-curse");
+const peopleSlider = document.getElementById("peopleSlider");
+const timeSlider = document.getElementById("timeSlider");
+const curseSlider = document.getElementById("curseSlider");
+
+peopleSlider.oninput = function() { 
+amtOfPeople.innerHTML = people[peopleSlider.value];
+}
+
+timeSlider.oninput = function() { 
+amtOfTime.innerHTML = time[timeSlider.value];
+}
+
+curseSlider.oninput = function() { 
+amtOfCurse.innerHTML = curse[curseSlider.value];
+}
+
+function display1(){
+	var rec = document.getElementById("rec").value;
+	document.getElementById("receiver").innerHTML = rec;
+}
+
+function display2(){
+	var send = document.getElementById("send").value;
+	document.getElementById("sender").innerHTML = send;
+}
+
+function sendMail(){
+window.open('mailto:test@example.com?subject=Important Message&body=document.getElementById("container")');
+}
+
+</script>
+
+</html>
